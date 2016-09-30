@@ -1,0 +1,1 @@
+$redis = Redis.new(driver: :hiredis, reconnect_attempts: 10)
