@@ -10,7 +10,7 @@ class Nafp::HighWarm
     @port = 21
     @user = "kfhyuser"
     @password = "0QY7rN86taOq"
-    @file_pattern = "high-warms"
+    @file_pattern = "*high-warms*"
   end
 
   def extract_to_redis
