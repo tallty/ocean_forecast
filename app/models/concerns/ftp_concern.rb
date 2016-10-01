@@ -19,7 +19,7 @@ module FtpConcern
       @connection = nil
     end
 
-    def ls file_pattern
+    def ls file_pattern=nil
       @connection.nlst(file_pattern)
     end
   end
