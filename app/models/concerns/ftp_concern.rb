@@ -1,14 +1,17 @@
+require 'net/ftp'
+
 module FtpConcern
   module ClassMethods
     
   end
   
   module InstanceMethods
-    def open
+    def connect
       @connection = Net::FTP.new
       @connection.connect(@server, @port)
       @connection.passive = @passive || false
       @connection.login(@user, @password)
+      @connection
     end
 
     def close

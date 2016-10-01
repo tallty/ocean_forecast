@@ -1,14 +1,15 @@
-class HighWarm
+class NAFP::HighWarm
+  include NAFP
 
   attr_reader :grib_filename, :nc_filename
 
   def initialize(grib_filename)
     @grib_filename = @grib_filename
     @nc_filename = "#{grib_filename}.nc" 
-  end
-
-  def convert_grib_to_netcdf
-    system "#{ENV["wgrib2_path"]/wgrib2} #{grib_filename} -netcdf #{nc_filename}"
+    @server = "10.228.2.53"
+    @port = 21
+    @user = "kfhyuser"
+    @password = "0QY7rN86taOq"
   end
 
   def extract_to_redis
@@ -22,4 +23,6 @@ class HighWarm
       $redis.hset _redis_key, _lon_index
     end
   end
+
+  
 end
