@@ -2,7 +2,7 @@ module Nafp
   include FtpConcern
 
   def convert_grib_to_netcdf
-    system "#{ENV["wgrib2_path"]/wgrib2} #{grib_filename} -netcdf #{nc_filename}"
+    system "#{ENV['wgrib2_path']}/wgrib2 #{grib_filename} -netcdf #{nc_filename}"
   end
   
   def fetch
@@ -24,7 +24,7 @@ module Nafp
           # 将远程文件拷贝到本地
           local_day_dir = File.join @local_dir, dir
           FileUtils.mkdir_p local_day_dir
-          local_file = File.join local_day_dir, file
+          local_file = File.join local_day_dir, "#{file}.grb"
           @connection.getbinaryfile(file, local_file)
           local_files << local_file
         end

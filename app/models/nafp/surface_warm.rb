@@ -1,4 +1,4 @@
-class Nafp::HighWarm
+class Nafp::SurfaceWarm
   include Nafp
 
   def initialize
@@ -6,8 +6,8 @@ class Nafp::HighWarm
     @port = 21
     @user = "kfhyuser"
     @password = "0QY7rN86taOq"
-    @file_pattern = "*high-warms*"
-    @local_dir = "./high-warms"
+    @file_pattern = "*surface-warms*"
+    @local_dir = "./surface-warms"
   end
 
   def extract_to_redis
