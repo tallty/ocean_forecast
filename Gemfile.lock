@@ -63,6 +63,7 @@ GEM
     mime-types-data (3.2016.0521)
     mini_portile2 (2.1.0)
     minitest (5.9.1)
+    multi_json (1.12.1)
     narray (0.6.1.2)
     narray_miss (1.4.0)
       narray
@@ -134,6 +135,7 @@ DEPENDENCIES
   figaro
   hiredis (~> 0.6.0)
   listen (~> 3.0.5)
+  multi_json
   puma (~> 3.0)
   rails (~> 5.0.0, >= 5.0.0.1)
   redis (~> 3.3)
