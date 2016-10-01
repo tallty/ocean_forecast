@@ -1,5 +1,5 @@
-class NAFP::HighWarm
-  include NAFP
+class Nafp::HighWarm
+  include Nafp
 
   attr_reader :grib_filename, :nc_filename
 

@@ -1,4 +1,4 @@
-module NAFP
+module Nafp
   include FtpConcern
 
   def convert_grib_to_netcdf
