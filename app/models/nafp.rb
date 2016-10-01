@@ -14,7 +14,7 @@ module Nafp
 
     remote_files = []
     ["#{yestoday_dir}/00", "#{yestoday_dir}/12", "#{today_dir}/00", "#{today_dir}/12"].each do |dir|
-      last_proc_time = Time.zone.parse MultiJson.load($redis.hget("last_proc_time", self.class.to_s)) rescue Time.zone.now-1.day
+      last_proc_time = ( Time.zone.parse MultiJson.load($redis.hget("last_proc_time", self.class.to_s)) rescue Time.zone.now-1.day )
       @connection.chdir dir rescue next
       files = self.ls @file_pattern
       files.each do |file|
