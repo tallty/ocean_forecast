@@ -18,6 +18,7 @@ module Nafp
       @connection.chdir dir rescue next
       files = self.ls @file_pattern
       files.each do |file|
+        puts "remote file is:#{file}"
         remote_files << File.join(dir, file) if created_at(file) > last_proc_time
       end
 
