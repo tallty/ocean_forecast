@@ -10,7 +10,7 @@ module Nafp
     today = Time.zone.today
     today_dir = today.strftime('%Y/%m/%d/')
     @connection.chdir today_dir
-    files = self.ls("")
+    files = self.ls
     puts "files is:#{files.inspect}"
   end
 end
