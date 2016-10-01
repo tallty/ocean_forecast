@@ -12,22 +12,27 @@ module Nafp
     yestoday = today - 1.day
     yestoday_dir = yestoday.strftime('%Y/%m/%d')
 
-    remote_files = []
+    local_files = []
+    # 由于有延迟的原因，所以需要把昨天和今天的可能目录都遍历一遍
     ["#{yestoday_dir}/00", "#{yestoday_dir}/12", "#{today_dir}/00", "#{today_dir}/12"].each do |dir|
       last_proc_time = ( Time.zone.parse MultiJson.load($redis.hget("last_proc_time", self.class.to_s)) rescue Time.zone.now-1.day )
       @connection.chdir dir rescue next
       files = self.ls @file_pattern
       files.each do |file|
-        puts "remote file is:#{file}"
-        puts "created_at(file) is:#{created_at(file)}"
-        puts "last_proc_time is:#{last_proc_time}"
-        remote_files << File.join(dir, file) if created_at(file) > last_proc_time
+        # 只处理未处理过的文件
+        if created_at(file) > last_proc_time
+          # 将远程文件拷贝到本地
+          local_day_dir = File.join @local_dir, dir
+          FileUtils.mkdir_p local_day_dir
+          local_file = File.join local_day_dir, file
+          @connection.getbinaryfile(file, local_file)
+          local_files << local_file
+        end
       end
-
     end
     
-    puts "remote_files is:#{remote_files.inspect}"
-    remote_files
+    puts "local_files is:#{local_files.inspect}"
+    local_files
   end
 
   def created_at filename

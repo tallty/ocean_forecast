@@ -11,6 +11,7 @@ class Nafp::HighWarm
     @user = "kfhyuser"
     @password = "0QY7rN86taOq"
     @file_pattern = "*high-warms*"
+    @local_dir = "./high-warms"
   end
 
   def extract_to_redis
