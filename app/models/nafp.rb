@@ -23,8 +23,8 @@ module Nafp
 
     end
     
-    puts "files is:#{files.inspect}"
-    files
+    puts "remote_files is:#{remote_files.inspect}"
+    remote_files
   end
 
   def created_at filename
