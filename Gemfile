@@ -27,6 +27,9 @@ gem "hiredis", "~> 0.6.0"
 # Simple Rails app configuration
 # Read more: https://github.com/laserlemon/figaro
 gem "figaro"
+# ruby-netcdf fork allowing install through Rubygems
+# Read more: https://github.com/gentooboontoo/gentooboontoo-ruby-netcdf
+gem 'ruby-netcdf', '~> 0.7.1.1'
 ############################################################################################################
 
 group :development, :test do

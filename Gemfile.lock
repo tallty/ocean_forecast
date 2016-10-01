@@ -63,6 +63,9 @@ GEM
     mime-types-data (3.2016.0521)
     mini_portile2 (2.1.0)
     minitest (5.9.1)
+    narray (0.6.1.2)
+    narray_miss (1.4.0)
+      narray
     nio4r (1.2.1)
     nokogiri (1.6.8)
       mini_portile2 (~> 2.1.0)
@@ -100,6 +103,9 @@ GEM
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
     redis (3.3.1)
+    ruby-netcdf (0.7.1.1)
+      narray
+      narray_miss
     spring (1.7.2)
     spring-watcher-listen (2.0.0)
       listen (>= 2.7, < 4.0)
@@ -131,6 +137,7 @@ DEPENDENCIES
   puma (~> 3.0)
   rails (~> 5.0.0, >= 5.0.0.1)
   redis (~> 3.3)
+  ruby-netcdf (~> 0.7.1.1)
   spring
   spring-watcher-listen (~> 2.0.0)
   sqlite3
