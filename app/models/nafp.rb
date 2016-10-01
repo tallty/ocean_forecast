@@ -19,6 +19,8 @@ module Nafp
       files = self.ls @file_pattern
       files.each do |file|
         puts "remote file is:#{file}"
+        puts "created_at(file) is:#{created_at(file)}"
+        puts "last_proc_time is:#{last_proc_time}"
         remote_files << File.join(dir, file) if created_at(file) > last_proc_time
       end
 
