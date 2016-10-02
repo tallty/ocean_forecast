@@ -18,7 +18,7 @@ class Nafp::SurfaceWarm
   end
 
   def extract_to_redis nc_filename
-    next if nc_filename.blank?
+    return if nc_filename.blank?
     _file = ::NumRu::NetCDF.open nc_filename
     _time_string = to_datetime_string created_at(nc_filename)
     _var_name = "APCP_surface"
