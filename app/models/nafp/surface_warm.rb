@@ -38,8 +38,9 @@ class Nafp::SurfaceWarm
           $redis.hset _redis_key, _lat_index, _lat_array.to_json
           $redis.expire _redis_key, 24*3600 #24 hours expire
         end
-      end  
+      end
     end
+    $redis.hset("last_proc_time", self.class.to_s, _time_string)
   end
 
   def extract_var_to_redis file, var_name
