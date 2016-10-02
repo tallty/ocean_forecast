@@ -8,9 +8,9 @@ module Nafp
   def fetch
     self.connect
     today = Time.zone.today
-    today_dir = today.strftime('%Y/%m/%d')
+    today_dir = today.strftime('/%Y/%m/%d')
     yestoday = today - 1.day
-    yestoday_dir = yestoday.strftime('%Y/%m/%d')
+    yestoday_dir = yestoday.strftime('/%Y/%m/%d')
 
     local_files = []
     # 由于有延迟的原因，所以需要把昨天和今天的可能目录都遍历一遍
