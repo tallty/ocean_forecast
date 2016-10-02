@@ -18,6 +18,7 @@ module Nafp
       last_proc_time = ( Time.zone.parse MultiJson.load($redis.hget("last_proc_time", self.class.to_s)) rescue Time.zone.now-1.day )
       @connection.chdir dir rescue next
       files = self.ls @file_pattern
+      puts "in #{dir}, files is:#{files}"
       files.each do |file|
         # 只处理未处理过的文件
         if created_at(file) > last_proc_time
