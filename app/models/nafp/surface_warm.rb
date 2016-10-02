@@ -24,7 +24,7 @@ class Nafp::SurfaceWarm
     _var_name = "APCP_surface"
     _var = _file.var _var_name
     _lat_array = []
-    _var.get.each_with_index do |_var_value, _index|
+    _var.get.each.with_index do |_var_value, _index|
       _lon_index = _index % 759
       _lat_index = _index / 759
       _lat_array = [] if _lon_index == 0
