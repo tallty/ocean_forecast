@@ -27,7 +27,7 @@ module Nafp
           local_day_dir = File.join @local_dir, dir
           FileUtils.mkdir_p local_day_dir
           local_file = File.join local_day_dir, "#{file}.grb"
-          @connection.getbinaryfile(file, local_file)
+          @connection.getbinaryfile(file, local_file) rescue retry
           local_files << local_file
         end
       end
