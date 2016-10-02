@@ -41,6 +41,12 @@ module Nafp
     Time.zone.parse(time_string)+8.hour
   end
 
+  def updated_at filename
+    time_string = filename.split("_")[-3]
+    delta_hour = filename.split(/-f|\./)[1].to_i
+    Time.zone.parse(time_string)+delta_hour.hour+8.hour
+  end
+
   def to_datetime_string time
     time.strftime('%Y%m%d%H')
   end

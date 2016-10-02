@@ -24,7 +24,8 @@ class Nafp::SurfaceWarm
   def extract_to_redis nc_filename, vars
     return if nc_filename.blank?
     _file = ::NumRu::NetCDF.open nc_filename
-    _time_string = to_datetime_string created_at(nc_filename)
+    _origin_time_string = to_datetime_string created_at(nc_filename)
+    _time_string = to_datetime_string update_at(nc_filename)
     vars.each do |_var_name|
       _var = _file.var _var_name
       _lat_array = []
@@ -40,7 +41,7 @@ class Nafp::SurfaceWarm
         end
       end
     end
-    $redis.hset("last_proc_time", self.class.to_s, _time_string)
+    $redis.hset("last_proc_time", self.class.to_s, _origin_time_string)
   end
 
   def extract_var_to_redis file, var_name
