@@ -43,7 +43,7 @@ module Nafp
 
   def updated_at filename
     time_string = filename.split("_")[-3]
-    delta_hour = filename.split(/-f|\./)[1].to_i
+    delta_hour = filename.split(/-f|\.BIN/)[1].to_i
     Time.zone.parse(time_string)+delta_hour.hour+8.hour
   end
 
