@@ -17,7 +17,7 @@ module Nafp
     local_files = []
     # 由于有延迟的原因，所以需要把昨天和今天的可能目录都遍历一遍
     ["#{yestoday_dir}/00", "#{yestoday_dir}/12", "#{today_dir}/00", "#{today_dir}/12"].each do |dir|
-      last_proc_time = ( Time.zone.parse MultiJson.load($redis.hget("last_proc_time", self.class.to_s)) rescue Time.zone.now-1.day )
+      last_proc_time = ( Time.zone.parse $redis.hget("last_proc_time", self.class.to_s) rescue Time.zone.now-1.day )
       @connection.chdir dir rescue next
       files = self.ls @file_pattern
       files.each do |file|
