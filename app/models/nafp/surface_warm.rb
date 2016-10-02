@@ -25,7 +25,7 @@ class Nafp::SurfaceWarm
     return if nc_filename.blank?
     _file = ::NumRu::NetCDF.open nc_filename
     _origin_time_string = to_datetime_string created_at(nc_filename)
-    _time_string = to_datetime_string update_at(nc_filename)
+    _time_string = to_datetime_string updated_at(nc_filename)
     vars.each do |_var_name|
       _var = _file.var _var_name
       _lat_array = []
