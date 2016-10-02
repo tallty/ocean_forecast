@@ -1,3 +1,5 @@
+require "numru/netcdf"
+
 class Nafp::SurfaceWarm
   include Nafp
 
