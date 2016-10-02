@@ -31,7 +31,7 @@ class Nafp::SurfaceWarm
       _lat_array << _var_value
       if _lon_index == 758
         _redis_key = "#{_var_name}_#{_time_string}"
-        $redis.hset _redis_key, _lat_index, _lat_array  
+        $redis.hset _redis_key, _lat_index, _lat_array.to_json
       end
     end
   end
