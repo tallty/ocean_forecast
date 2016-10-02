@@ -12,7 +12,7 @@ class Nafp::SurfaceWarm
 
   def proc
     nc_files = fetch
-    extract_to_redis nc_filename nc_files.first
+    extract_to_redis nc_files.first
   end
 
   def extract_to_redis nc_filename
