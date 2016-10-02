@@ -33,6 +33,10 @@ gem 'ruby-netcdf', '~> 0.7.1.1'
 # A generic swappable back-end for JSON handling. http://rdoc.info/projects/intridea/multi_json
 # Read more: https://github.com/intridea/multi_json
 gem 'multi_json'
+# Whenever is a Ruby gem that provides a clear syntax for writing and deploying cron jobs.
+# Read more: https://github.com/javan/whenever
+# Running: wheneverize .
+gem 'whenever', :require => false
 ############################################################################################################
 
 group :development, :test do
