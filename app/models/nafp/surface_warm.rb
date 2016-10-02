@@ -10,15 +10,26 @@ class Nafp::SurfaceWarm
     @local_dir = "./surface-warms"
   end
 
-  def extract_to_redis
-    @file = NumRu::NetCDF.open nc_filename
-    _var_name = "TMP_2mb"
-    _var = @file.var _var_name
+  def proc
+    nc_files = fetch
+    extract_to_redis nc_filename nc_files.first
+  end
+
+  def extract_to_redis nc_filename
+    _file = NumRu::NetCDF.open nc_filename
+    _time_string = to_datetime_string created_at(nc_filename)
+    _var_name = "APCP_surface"
+    _var = _file.var _var_name
+    _lat_array = []
     _var.get.each_with_index do |_var_value, _index|
-      _lon_index = 
-      _lat_index = 
-      _redis_key = "#{_var_name}_#{time}"
-      $redis.hset _redis_key, _lon_index
+      _lon_index = _index % 759
+      _lat_index = _index / 759
+      _lat_array = [] if _lon_index == 0
+      _lat_array << _var_value
+      if _lon_index == 758
+        _redis_key = "#{_var_name}_#{_time_string}"
+        $redis.hset _redis_key, _lat_index, _lat_array  
+      end
     end
   end
 
