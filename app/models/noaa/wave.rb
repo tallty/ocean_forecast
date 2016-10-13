@@ -6,7 +6,7 @@ class Noaa::Wave
     @port = 21
     @passive = true
     @file_pattern = "nww3.*.grib.grib2"
-    @local_dir = "./ftp/wave"
+    @local_dir = "../ftp/wave"
     @remote_dir = "/pub/data/nccf/com/wave/prod"
   end
 

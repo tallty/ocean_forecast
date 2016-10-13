@@ -5,7 +5,7 @@ class Noaa::Gfs
     @server = "ftpprd.ncep.noaa.gov"
     @port = 21
     @passive = true
-    @local_dir = "./ftp/wave"
+    @local_dir = "../ftp/wave"
     @remote_dir = "/pub/data/nccf/com/gfs/prod"
 
     @file_pattern = "gfs.t*pgrb2full*"
@@ -37,7 +37,6 @@ class Noaa::Gfs
 
         files.each do |file|
           next unless valid_file? file
-
           
           local_dir = File.join @local_dir, today_dir
           local_file = File.join local_dir, file
@@ -45,7 +44,7 @@ class Noaa::Gfs
           FileUtils.mkdir_p local_dir
           
           puts "begin to download #{file}, save to #{local_file}"
-          # @connection.getbinaryfile(file, local_file) rescue retry
+          @connection.getbinaryfile(file, local_file) rescue retry
         end
         $redis.hset("last_proc_time", self.class.to_s, to_datetime_string(file_created_at) )
       end
