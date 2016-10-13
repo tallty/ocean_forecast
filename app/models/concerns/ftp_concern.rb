@@ -10,7 +10,11 @@ module FtpConcern
       @connection = Net::FTP.new
       @connection.connect(@server, @port)
       @connection.passive = @passive || false
-      @connection.login(@user, @password)
+      if @user.present?
+        @connection.login(@user, @password)
+      else
+        @connection.login
+      end
       @connection
     end
 
