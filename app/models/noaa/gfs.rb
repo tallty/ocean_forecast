@@ -5,7 +5,7 @@ class Noaa::Gfs
     @server = "ftpprd.ncep.noaa.gov"
     @port = 21
     @passive = true
-    @local_dir = "../ftp/wave"
+    @local_dir = "../ftp/gfs"
     @remote_dir = "/pub/data/nccf/com/gfs/prod"
 
     @file_pattern = "gfs.t*pgrb2full*"
