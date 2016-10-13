@@ -29,7 +29,7 @@ gem "hiredis", "~> 0.6.0"
 gem "figaro"
 # ruby-netcdf fork allowing install through Rubygems
 # Read more: https://github.com/gentooboontoo/gentooboontoo-ruby-netcdf
-gem 'ruby-netcdf', '~> 0.7.1.1'
+# gem 'ruby-netcdf', '~> 0.7.1.1'
 # A generic swappable back-end for JSON handling. http://rdoc.info/projects/intridea/multi_json
 # Read more: https://github.com/intridea/multi_json
 gem 'multi_json'
