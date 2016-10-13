@@ -32,7 +32,7 @@ class Noaa::Gfs
         files.each do |file|
           next unless valid_file? file
           
-          local_dir = File.join @local_dir, today_dir
+          local_dir = File.join @local_dir, _dir
           local_file = File.join local_dir, "#{file}.grib2"
 
           FileUtils.mkdir_p local_dir
