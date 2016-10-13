@@ -7,8 +7,12 @@
 #
 set :output, "./log/cron_log.log"
 #
-every 1.hours do
-  runner "Nafp::SurfaceWarm.proc"
+every 10.minutes do
+  runner "Noaa::Wave.new.fetch"
+end
+
+every 10.minutes do
+  runner "Noaa::Gfs.new.fetch"
 end
 #
 # every 4.days do
