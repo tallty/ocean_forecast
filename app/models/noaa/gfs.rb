@@ -9,12 +9,6 @@ class Noaa::Gfs
     @remote_dir = "/pub/data/nccf/com/gfs/prod"
 
     @file_pattern = "gfs.t*pgrb2full*"
-    # @file_pattern << "("
-    # (0..80).each do |index|
-    #   str = (index * 3).to_s.rjust(3, '0')
-    #   @file_pattern << "#{str}|"
-    # end
-    # @file_pattern << ")"
   end
 
   def fetch
@@ -39,7 +33,7 @@ class Noaa::Gfs
           next unless valid_file? file
           
           local_dir = File.join @local_dir, today_dir
-          local_file = File.join local_dir, file
+          local_file = File.join local_dir, "#{file}.grib2"
 
           FileUtils.mkdir_p local_dir
           
