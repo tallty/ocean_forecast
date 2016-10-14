@@ -27,7 +27,7 @@ class Noaa::Gfs
         next unless file_created_at > last_proc_time
 
         @connection.chdir dir rescue next
-        files = self.ls @file_pattern
+        files = self.ls @file_pattern rescue retry
 
         files.each do |file|
           next unless valid_file? file
@@ -37,8 +37,14 @@ class Noaa::Gfs
 
           FileUtils.mkdir_p local_dir
           
-          puts "begin to download #{file}, save to #{local_file}"
-          @connection.getbinaryfile(file, local_file) rescue retry
+          begin
+            puts "#{Time.zone.now} begin to download #{file}, save to #{local_file}"
+            @connection.getbinaryfile(file, local_file) rescue retry  
+          rescue Exception => e
+            puts e.backtrace
+            retry
+          end
+          
         end
         $redis.hset("last_proc_time", self.class.to_s, to_datetime_string(file_created_at) )
       end

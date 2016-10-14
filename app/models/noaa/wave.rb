@@ -23,7 +23,7 @@ class Noaa::Wave
       dir = File.join @remote_dir, today_dir
       @connection.chdir dir rescue return
 
-      files = self.ls @file_pattern
+      files = self.ls @file_pattern rescue retry
       files.each do |file|
         last_proc_time = ( Time.zone.parse $redis.hget("last_proc_time", self.class.to_s) rescue Time.zone.now-1.day )
         local_dir = File.join @local_dir, today_dir
@@ -34,8 +34,14 @@ class Noaa::Wave
 
         FileUtils.mkdir_p local_dir
         
-        puts "begin to download #{file}, save to #{local_file}"
-        @connection.getbinaryfile(file, local_file) rescue retry
+        begin
+          puts "#{Time.zone.now} begin to download #{file}, save to #{local_file}"
+          @connection.getbinaryfile(file, local_file) rescue retry
+        rescue Exception => e
+          puts e.backtrace
+          retry
+        end
+        
 
         $redis.hset("last_proc_time", self.class.to_s, to_datetime_string(file_created_at) )
       end
