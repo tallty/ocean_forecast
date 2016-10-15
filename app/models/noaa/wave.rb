@@ -36,7 +36,7 @@ class Noaa::Wave
         
         begin
           puts "#{Time.zone.now} begin to download #{file}, save to #{local_file}"
-          @connection.getbinaryfile(file, local_file) rescue retry
+          @connection.getbinaryfile(file, local_file)
         rescue Exception => e
           puts e.backtrace
           retry
