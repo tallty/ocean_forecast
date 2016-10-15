@@ -64,11 +64,17 @@ class Noaa::Gfs
         FileUtils.mkdir_p local_dir
 
         begin
+          if @connection.closed?
+            puts "#{Time.zone.now} reconnect ftp connection"
+            self.connect
+            @connection.chdir dir
+          end
           puts "#{Time.zone.now} remote dir is: #{@connection.getdir}"
           puts "#{Time.zone.now} begin to download #{file}, save to #{local_file}"
           @connection.getbinaryfile(file, local_file) 
         rescue Exception => e
           puts e.backtrace
+          sleep 2
           retry
         end
 
