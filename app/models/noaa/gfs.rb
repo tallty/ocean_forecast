@@ -41,8 +41,6 @@ class Noaa::Gfs
     return true
   end
 
-  private
-
   def fetch_by_date date
     $redis.set "#{self.class.to_s}#processing", true
     connect = self.connect
