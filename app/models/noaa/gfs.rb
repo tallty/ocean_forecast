@@ -64,7 +64,7 @@ class Noaa::Gfs
         FileUtils.mkdir_p local_dir
 
         begin
-          if @connection.closed?
+          if @connection.try(:closed?)
             puts "#{Time.zone.now} reconnect ftp connection"
             self.connect
             @connection.chdir dir
