@@ -79,7 +79,6 @@ class Noaa::Gfs
   ensure
     $redis.del "#{self.class.to_s}#processing"
   end
-end
 
 
 end
