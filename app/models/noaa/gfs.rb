@@ -11,46 +11,15 @@ class Noaa::Gfs
     @file_pattern = "gfs.t*pgrb2full*"
   end
 
+  def self.force_fetch date
+    Noaa::Gfs.new.fetch_by_date date
+  end
+
   def fetch
     return if processing?
 
-    begin
-      $redis.set "#{self.class.to_s}#processing", true
-      connect = self.connect
-
-      today = Time.zone.today
-      today_dir = "gfs." + today.strftime('%Y%m%d')
-      ["#{today_dir}00", "#{today_dir}06", "#{today_dir}12", "#{today_dir}18"].each do |_dir|
-        dir = File.join @remote_dir, _dir
-        last_proc_time = ( Time.zone.parse $redis.hget("last_proc_time", self.class.to_s) rescue Time.zone.now-1.day )
-        file_created_at = Time.zone.parse(_dir)
-        next unless file_created_at > last_proc_time
-
-        @connection.chdir dir rescue next
-        files = self.ls @file_pattern rescue retry
-
-        files.each do |file|
-          next unless valid_file? file
-          
-          local_dir = File.join @local_dir, _dir
-          local_file = File.join local_dir, "#{file}.grib2"
-
-          FileUtils.mkdir_p local_dir
-          
-          begin
-            puts "#{Time.zone.now} begin to download #{file}, save to #{local_file}"
-            @connection.getbinaryfile(file, local_file) 
-          rescue Exception => e
-            puts e.backtrace
-            retry
-          end
-          
-        end
-        $redis.hset("last_proc_time", self.class.to_s, to_datetime_string(file_created_at) )
-      end
-    ensure
-      $redis.del "#{self.class.to_s}#processing"
-    end
+    today = Time.zone.today
+    fetch_by_date today
   end
 
   def created_at local_file
@@ -71,6 +40,46 @@ class Noaa::Gfs
     end
     return true
   end
+
+  private
+
+  def fetch_by_date date
+    $redis.set "#{self.class.to_s}#processing", true
+    connect = self.connect
+
+    date_dir = "gfs." + date.strftime('%Y%m%d')
+    ["#{date_dir}00", "#{date_dir}06", "#{date_dir}12", "#{date_dir}18"].each do |_dir|
+      dir = File.join @remote_dir, _dir
+      last_proc_time = ( Time.zone.parse $redis.hget("last_proc_time", self.class.to_s) rescue Time.zone.now-1.day )
+      file_created_at = Time.zone.parse(_dir)
+      next unless file_created_at > last_proc_time
+
+      @connection.chdir dir rescue next
+      files = self.ls @file_pattern rescue retry
+
+      files.each do |file|
+        next unless valid_file? file
+
+        local_dir = File.join @local_dir, _dir
+        local_file = File.join local_dir, "#{file}.grib2"
+
+        FileUtils.mkdir_p local_dir
+
+        begin
+          puts "#{Time.zone.now} begin to download #{file}, save to #{local_file}"
+          @connection.getbinaryfile(file, local_file) 
+        rescue Exception => e
+          puts e.backtrace
+          retry
+        end
+
+      end
+      $redis.hset("last_proc_time", self.class.to_s, to_datetime_string(file_created_at) )
+    end
+  ensure
+    $redis.del "#{self.class.to_s}#processing"
+  end
+end
 
 
 end
