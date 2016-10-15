@@ -64,6 +64,7 @@ class Noaa::Gfs
         FileUtils.mkdir_p local_dir
 
         begin
+          puts "#{Time.zone.now} remote dir is: #{@connection.getdir}"
           puts "#{Time.zone.now} begin to download #{file}, save to #{local_file}"
           @connection.getbinaryfile(file, local_file) 
         rescue Exception => e
