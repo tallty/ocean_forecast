@@ -48,7 +48,7 @@ class Noaa::Gfs
     date_dir = "gfs." + date.strftime('%Y%m%d')
     ["#{date_dir}00", "#{date_dir}06", "#{date_dir}12", "#{date_dir}18"].each do |_dir|
       dir = File.join @remote_dir, _dir
-      last_proc_time = ( Time.zone.parse $redis.hget("last_proc_time", self.class.to_s) rescue Time.zone.now-1.day )
+      last_proc_time = ( Time.zone.parse $redis.hget("last_proc_time", self.class.to_s) rescue Time.zone.now-10.day )
       file_created_at = Time.zone.parse(_dir)
       next unless file_created_at > last_proc_time
 
