@@ -24,6 +24,10 @@ module FtpConcern
       @connection = nil
     end
 
+    def closed?
+      @connection.nil? || @connection.closed?
+    end
+
     def ls file_pattern=nil
       @connection.nlst(file_pattern)
     end
