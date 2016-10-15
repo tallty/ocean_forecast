@@ -73,6 +73,7 @@ class Noaa::Gfs
           puts "#{Time.zone.now} begin to download #{file}, save to #{local_file}"
           @connection.getbinaryfile(file, local_file) 
         rescue Exception => e
+          self.close
           puts e.backtrace
           sleep 2
           retry
@@ -82,6 +83,7 @@ class Noaa::Gfs
       $redis.hset("last_proc_time", self.class.to_s, to_datetime_string(file_created_at) )
     end
   ensure
+    self.close
     $redis.del "#{self.class.to_s}#processing"
   end
 
