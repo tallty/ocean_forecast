@@ -75,7 +75,7 @@ class Noaa::Gfs
         rescue Exception => e
           self.close
           puts e.backtrace
-          sleep 2
+          sleep 10
           retry
         end
 

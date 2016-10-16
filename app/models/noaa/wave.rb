@@ -35,10 +35,17 @@ class Noaa::Wave
         FileUtils.mkdir_p local_dir
         
         begin
+          if self.closed?
+            puts "#{Time.zone.now} reconnect ftp connection"
+            self.connect
+            @connection.chdir dir
+          end
           puts "#{Time.zone.now} begin to download #{file}, save to #{local_file}"
           @connection.getbinaryfile(file, local_file)
         rescue Exception => e
+          self.close
           puts e.backtrace
+          sleep 10
           retry
         end
         
@@ -46,6 +53,7 @@ class Noaa::Wave
         $redis.hset("last_proc_time", self.class.to_s, to_datetime_string(file_created_at) )
       end
     ensure
+      self.close
       $redis.del "#{self.class.to_s}#processing"
     end
   end
