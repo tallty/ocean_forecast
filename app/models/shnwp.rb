@@ -1,6 +1,34 @@
 module Shnwp
   include FtpConcern
 
+  def self.get_data_json data_type, date_string
+    date = Date.parse date_string rescue Time.zone.today
+    data_class = case data_type.downcase
+    when "gfs"
+      "Shnwp::Gfs"
+    when "hycom"
+      "Shnwp::Hycom"
+    when "nww3"
+      "Shnwp::Nww3"
+    else
+      return {error: "data type is error: #{data_type}"}
+    end
+    redis_key = "#{data_class}#data##{date.strftime('%Y%m%d')}"
+    periods = $redis.hkeys(redis_key)
+    periods_hash = periods.map do |period|
+      files = MultiJson.load($redis.hget(redis_key, period))
+      {
+        period: period,
+        files: files
+      }
+    end
+    {
+      type: data_type,
+      date: date,
+      periods: periods_hash
+    }
+  end
+
   def processing?
       $redis.get("#{self.class.to_s}#processing").present? 
   end

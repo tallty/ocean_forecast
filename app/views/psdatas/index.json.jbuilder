@@ -1,0 +1,1 @@
+json.array! @psdatas, partial: 'psdatas/psdata', as: :psdata

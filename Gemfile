@@ -9,7 +9,7 @@ gem 'sqlite3'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-# gem 'jbuilder', '~> 2.5'
+gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 gem 'redis', '~> 3.3'
 # Ruby wrapper for hiredis, Read more: https://github.com/redis/hiredis-rb
@@ -37,6 +37,8 @@ gem 'multi_json'
 # Read more: https://github.com/javan/whenever
 # Running: wheneverize .
 gem 'whenever', :require => false
+# A set of Rails responders to dry up your application, Read more: https://github.com/plataformatec/responders
+gem "responders"
 ############################################################################################################
 
 group :development, :test do
