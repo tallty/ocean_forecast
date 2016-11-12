@@ -35,9 +35,12 @@ module Shnwp
 
   private
     def fetch_folder folder
+      url = "http://61.152.122.112:8081"
+
       dir = File.join @remote_dir, folder
       @connection.chdir dir rescue retry
       files = self.ls @file_pattern rescue retry
+      file_info_arr = []
 
       files.each do |file|
         local_dir = File.join @local_dir, folder
@@ -52,7 +55,10 @@ module Shnwp
           end
           puts "#{Time.zone.now} remote dir is: #{@connection.getdir}"
           puts "#{Time.zone.now} begin to download #{file}, save to #{local_file}"
-          @connection.getbinaryfile(file, local_file) 
+          @connection.getbinaryfile(file, local_file)
+
+          file_path = local_file.sub("./public/", "")
+          file_info_arr << { filename: file, url: "#{url}/#{file_path}" }
         rescue Exception => e
           self.close
           puts e.backtrace
@@ -60,5 +66,8 @@ module Shnwp
           retry
         end
       end
+
+      # Save file informations to redis
+      $redis.hset("#{self.class.to_s}#data##{folder[0..7]}", folder, file_info_arr.to_json)
     end
 end

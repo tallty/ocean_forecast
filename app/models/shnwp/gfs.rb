@@ -7,7 +7,7 @@ class Shnwp::Gfs
     @passive = true
     @user = "unimet"
     @password = "KKcBh9VhivM"
-    @local_dir = "../ftp/gfs"
+    @local_dir = "./public/gfs"
     @remote_dir = "/GFS"
 
     @file_pattern = "gfs*"
