@@ -63,7 +63,7 @@ module Shnwp
 
   private
     def fetch_folder folder
-      url = "http://61.152.122.112:8081"
+      url = "http://61.152.122.112:8080"
 
       dir = File.join @remote_dir, folder
       @connection.chdir dir rescue retry
