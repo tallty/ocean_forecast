@@ -7,7 +7,7 @@ class Shnwp::Gfs
     @passive = true
     @user = "unimet"
     @password = "KKcBh9VhivM"
-    @local_dir = "./public/gfs"
+    @local_dir = "../sh_weather/public/gfs"
     @remote_dir = "/GFS"
 
     @file_pattern = "gfs*"

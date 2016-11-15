@@ -85,7 +85,7 @@ module Shnwp
           puts "#{Time.zone.now} begin to download #{file}, save to #{local_file}"
           @connection.getbinaryfile(file, local_file)
 
-          file_path = local_file.sub("./public/", "")
+          file_path = local_file.sub("../sh_weather/public/", "")
           file_info_arr << { filename: file, url: "#{url}/#{file_path}" }
         rescue Exception => e
           self.close
