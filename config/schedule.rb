@@ -7,12 +7,17 @@
 #
 set :output, "./log/cron_log.log"
 #
+
 every 10.minutes do
-  runner "Noaa::Wave.new.fetch"
+  runner "Shnwp::Gfs.new.fetch_latest"
 end
 
 every 10.minutes do
-  runner "Noaa::Gfs.new.fetch"
+  runner "Shnwp::Hycom.new.fetch_latest"
+end
+
+every 10.minutes do
+  runner "Shnwp::Nww3.new.fetch_latest"
 end
 #
 # every 4.days do

@@ -1,6 +1,10 @@
 module Shnwp
   include FtpConcern
 
+  def fetch_latest
+    fetch_by_date Time.zone.today
+  end
+
   def self.get_data_json data_type, date_string
     date = Date.parse date_string rescue Time.zone.today
     data_class = case data_type.downcase
