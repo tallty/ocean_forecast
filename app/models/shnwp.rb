@@ -2,6 +2,7 @@ module Shnwp
   include FtpConcern
 
   def fetch_latest
+    fetch_by_date Time.zone.today - 1.day
     fetch_by_date Time.zone.today
   end
 
@@ -56,9 +57,9 @@ module Shnwp
       file_created_at = Time.zone.parse(folder)
       next unless file_created_at > last_proc_time
 
-      fetch_folder folder
+      files = fetch_folder folder
 
-      $redis.hset("last_proc_time", self.class.to_s, folder )
+      $redis.hset("last_proc_time", self.class.to_s, folder ) if files.present?
     end
   ensure
     self.close
@@ -73,6 +74,8 @@ module Shnwp
       @connection.chdir dir rescue retry
       files = self.ls @file_pattern rescue retry
       file_info_arr = []
+
+      return nil if files.blank?
 
       files.each do |file|
         local_dir = File.join @local_dir, folder
@@ -101,5 +104,7 @@ module Shnwp
 
       # Save file informations to redis
       $redis.hset("#{self.class.to_s}#data##{folder[0..7]}", folder, file_info_arr.to_json)
+
+      files
     end
 end
