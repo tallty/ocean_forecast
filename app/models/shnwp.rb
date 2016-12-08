@@ -2,8 +2,10 @@ module Shnwp
   include FtpConcern
 
   def fetch_latest
-    fetch_by_date Time.zone.today - 1.day
-    fetch_by_date Time.zone.today
+    unless processing?
+      fetch_by_date Time.zone.today - 1.day
+      fetch_by_date Time.zone.today  
+    end
   end
 
   def self.get_data_json data_type, date_string
