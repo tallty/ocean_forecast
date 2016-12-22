@@ -64,8 +64,8 @@ module Shnwp
       $redis.hset("last_proc_time", self.class.to_s, folder ) if files.present?
     end
   ensure
-    self.close
     $redis.del "#{self.class.to_s}#processing"
+    self.close
   end
 
   private
