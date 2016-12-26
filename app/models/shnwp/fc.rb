@@ -5,6 +5,7 @@ class Shnwp::Fc
     @server = "59.110.141.81"
     @port = 21
     @passive = true
+    @epsv = true
     @user = "ftptest"
     @password = "Kjfwzx2016"
     @local_dir = "../sh_weather/public/fc"
