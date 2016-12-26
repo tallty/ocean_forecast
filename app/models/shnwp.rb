@@ -17,6 +17,10 @@ module Shnwp
       "Shnwp::Hycom"
     when "nww3"
       "Shnwp::Nww3"
+    when "cw"
+      "Shnwp::Cw"
+    when "fc"
+      "Shnwp::Fc"
     else
       return {error: "data type is error: #{data_type}"}
     end
