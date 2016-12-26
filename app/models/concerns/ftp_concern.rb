@@ -1,18 +1,5 @@
 require 'net/ftp'
 
-module Net
-  class FTP
-    def makepasv
-      if @sock.peeraddr[0] == 'AF_INET'
-        host, port = parse229(sendcmd('EPSV'))
-      else
-        host, port = parse227(sendcmd('EPSV'))
-      end
-      return host, port
-    end
-  end
-end
-
 module FtpConcern
   module ClassMethods
     
@@ -24,7 +11,6 @@ module FtpConcern
       @connection.connect(@server, @port)
       @connection.passive = @passive || false
       @connection.resume = true
-      @connection.makepasv if @epsv
       if @user.present?
         @connection.login(@user, @password)
       else
