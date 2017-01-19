@@ -55,6 +55,7 @@ module Shnwp
     date_string = date.strftime('%Y%m%d')
     puts "date_string is:#{date_string}"
     @connection.chdir @remote_dir
+    @connection.nlst @file_pattern # FC数据第一次取不到数据，这里强行获取一次目录中的文件
     dirs = self.ls rescue [date_string]
     dirs.select! { |dir| dir.start_with? date_string }
     
