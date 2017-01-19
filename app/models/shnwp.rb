@@ -55,7 +55,7 @@ module Shnwp
     date_string = date.strftime('%Y%m%d')
     puts "date_string is:#{date_string}"
     @connection.chdir @remote_dir
-    dirs = self.ls rescue retry
+    dirs = self.ls rescue [date_string]
     dirs.select! { |dir| dir.start_with? date_string }
     
     dirs.each do |folder|
