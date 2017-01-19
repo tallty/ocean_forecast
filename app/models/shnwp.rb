@@ -77,7 +77,7 @@ module Shnwp
       url = "http://61.152.122.112:8080"
 
       dir = File.join @remote_dir, folder
-      @connection.chdir dir rescue retry
+      @connection.chdir dir rescue return
       files = self.ls @file_pattern rescue retry
       file_info_arr = []
 
