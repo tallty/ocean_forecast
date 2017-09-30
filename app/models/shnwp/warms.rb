@@ -21,6 +21,7 @@ class Shnwp::Warms
     puts "date_string is:#{date_string}"
     @connection.chdir date_string
     dirs = self.ls rescue [00, 12]
+    dirs.select! { |dir| ['00', '12'].include? dir }
     
     dirs.each do |folder|
       last_proc_time = ( Time.zone.parse $redis.hget("last_proc_time", self.class.to_s) rescue Time.zone.now-10.day )
