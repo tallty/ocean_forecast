@@ -10,7 +10,7 @@ class Shnwp::Warms
     @local_dir = "../sh_weather/public/warms"
     @remote_dir = "/"
 
-    @file_pattern = "*surface-warms*"
+    @file_pattern = "*.BIN"
   end
 
   def fetch_by_date date
@@ -26,13 +26,14 @@ class Shnwp::Warms
     dirs.each do |folder|
       last_proc_time = ( Time.zone.parse $redis.hget("last_proc_time", self.class.to_s) rescue Time.zone.now-10.day )
 
-      folder = "#{date_string} folder"
-      file_created_at = Time.zone.parse(folder)
+      time_string = "#{date_string} #{folder}"
+      file_created_at = Time.zone.parse(time_string)
       next unless file_created_at > last_proc_time
 
+      folder = "#{date_string}/#{folder}"
       files = fetch_folder folder
 
-      $redis.hset("last_proc_time", self.class.to_s, folder ) if files.present?
+      $redis.hset("last_proc_time", self.class.to_s, time_string ) if files.present?
     end
   ensure
     $redis.del "#{self.class.to_s}#processing"
