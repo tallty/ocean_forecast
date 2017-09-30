@@ -113,7 +113,9 @@ module Shnwp
 
       # Save file informations to redis
       folder = folder.gsub "/", ""
-      $redis.hset("#{self.class.to_s}#data##{folder[0..7]}", folder, file_info_arr.to_json)
+      redis_key = "#{self.class.to_s}#data##{folder[0..7]}"
+      $redis.hset(redis_key, folder, file_info_arr.to_json)
+      $redis.expire redis_key, 7*24*3600 # 7days expire
 
       files
     end
