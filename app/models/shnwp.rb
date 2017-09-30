@@ -21,6 +21,8 @@ module Shnwp
       "Shnwp::Cw"
     when "fc"
       "Shnwp::Fc"
+    when "warms"
+      "Shnwp::Warms"
     else
       return {error: "data type is error: #{data_type}"}
     end
@@ -110,6 +112,7 @@ module Shnwp
       end
 
       # Save file informations to redis
+      folder = folder.gsub "/", ""
       $redis.hset("#{self.class.to_s}#data##{folder[0..7]}", folder, file_info_arr.to_json)
 
       files
