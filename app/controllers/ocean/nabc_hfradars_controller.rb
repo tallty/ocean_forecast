@@ -6,11 +6,12 @@ class Ocean::NabcHfradarsController < ApplicationController
 
   private
 
-    def get_data_jaon(type, date)
+    def get_data_json(type, date)
       date = Date.parse params[:date] rescue Time.zone.today
-      data_type = (data_types & params[:type]).first || return { error: "data type is error: #{data_type}"}
+      data_type = (data_types & Array(params[:type])).first
+      return({ error: "data type is error: #{data_type}"}) unless data_type
       
-      files_json = Dir[ File.join(date_dir(data_type, date), "*#{file_type}" ].map do |path|
+      Dir[ File.join(date_dir(data_type, date), "*#{file_type}") ].map do |path|
         {
           filename: File.basename(path),
           url: "#{url_base}#{path.split('/public/').last}"
@@ -19,7 +20,7 @@ class Ocean::NabcHfradarsController < ApplicationController
     end
 
     def local_dir
-      './public/nabc_hfradar/'  
+      NABC::LOCAL_DIR
     end
 
     def file_type
@@ -39,7 +40,7 @@ class Ocean::NabcHfradarsController < ApplicationController
     end
 
     def data_types
-      %q{
+      %w{
         usegc_1km usegc_2km usegc_6km 
         uswc_500m uswc_1km  uswc_2km  uswc_6km   
         ushi_1km  ushi_2km  ushi_6km  

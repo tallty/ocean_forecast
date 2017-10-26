@@ -1,7 +1,7 @@
 # !/usr/bin/env puma
 
 # rails的运行环境
-environment = ENV['RAILS_ENV'] || "production"
+environment "production"
 threads 2, 128
 workers 4
 

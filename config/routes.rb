@@ -3,8 +3,8 @@ Rails.application.routes.draw do
   resources :psdatas, only: [:index]
   
   require 'sidekiq/web'
-  mount Sidekiq::Web => '/ocean/sidekiq'
-  
+  mount Sidekiq::Web => '/ocean_sidekiq'
+
   namespace :ocean do
     resources :nabc_hfradars, only: [:index]
   end

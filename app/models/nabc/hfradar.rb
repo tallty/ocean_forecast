@@ -18,9 +18,7 @@ class NABC::Hfradar
   # Init File List:
   #   http://sdf.ndbc.noaa.gov/thredds/catalog/hfradar/catalog.html
 
-  def initialize
-    @local_dir = '/home/deploy/ocean_forecast/public/nabc_hfradar/'
-  end
+  LOCAL_DIR = '/home/deploy/ocean_forecast/public/ocean/nabc_hfradar/'
 
   def scan
     groups = get_list.search('tr')[2..-1].map { |ele| line_to_filename ele.content }.group_by { |name| match_filename(name)[2] }  
@@ -61,7 +59,7 @@ class NABC::Hfradar
 
   def date_dir key, time
     time = time.to_time
-    File.join(@local_dir, key, time.year.to_s, time.month.to_s, time.day.to_s)
+    File.join(LOCAL_DIR, key, time.year.to_s, time.month.to_s, time.day.to_s)
   end
 
   def get_local_file_list key
