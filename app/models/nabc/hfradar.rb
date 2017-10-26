@@ -36,7 +36,7 @@ class NABC::Hfradar
     new_files.each do |filename| 
       
       name, date, key = match_filename(filename).to_a
-      next unless key.in?['usegc_1km', 'uswc_1km', 'ushi_1km']
+      next unless key.in?(['usegc_1km', 'uswc_1km', 'ushi_1km'])
       HttpDownloadWorker.perform_async(
         name, key, get_uri(filename), date_dir(key, date)
       ) 
