@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   require 'sidekiq/web'
   mount Sidekiq::Web => '/ocean/sidekiq'
   
-  scope :ocean do
-
+  namespace :ocean do
+    resources :nabc_hfradar, only: [:index]
   end
 end
