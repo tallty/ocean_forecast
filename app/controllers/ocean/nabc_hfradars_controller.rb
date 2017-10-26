@@ -1,4 +1,4 @@
-class Ocean::NABCHfradarsController < ApplicationController
+class Ocean::NabcHfradarsController < ApplicationController
 
   def index
     render json: get_data_json(params[:type], params[:date])

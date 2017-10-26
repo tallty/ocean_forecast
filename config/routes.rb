@@ -6,6 +6,6 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => '/ocean/sidekiq'
   
   namespace :ocean do
-    resources :nabc_hfradar, only: [:index]
+    resources :nabc_hfradars, only: [:index]
   end
 end
