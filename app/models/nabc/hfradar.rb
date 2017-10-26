@@ -22,11 +22,10 @@ class NABC::Hfradar
     @local_dir = 'public/http'
   end
 
-  def scanner
+  def scan
     groups = get_list.search('tr')[2..-1].map { |ele| line_to_filename ele.content }.group_by { |name| match_filename(name)[2] }  
     new_files = []
     groups.each do |key, names|
-      next unless key == 'uswc_6km'
       new_files += (names - $redis.smembers("#{key}_downloading") - get_local_file_list(key))
     end
 
@@ -37,7 +36,7 @@ class NABC::Hfradar
       ) 
     end
   end
-  
+
   def get_list
     require 'net/http'
     uri = URI('http://sdf.ndbc.noaa.gov/thredds/catalog/hfradar/catalog.html')

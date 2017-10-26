@@ -34,7 +34,7 @@ every 1.day, :at => '20:25' do
 end
 
 every 10.minutes do
-  runner "NABC::Hfradar.new.scanner"
+  runner "NABC::Hfradar.new.scan"
 end
 #
 # every 4.days do
