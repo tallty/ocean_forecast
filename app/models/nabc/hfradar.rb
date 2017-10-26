@@ -19,7 +19,7 @@ class NABC::Hfradar
   #   http://sdf.ndbc.noaa.gov/thredds/catalog/hfradar/catalog.html
 
   def initialize
-    @local_dir = '/root/www/sh_weather/public/nabc_hfradar/'
+    @local_dir = '/public/nabc_hfradar/'
   end
 
   def scan
@@ -30,6 +30,7 @@ class NABC::Hfradar
     end
 
     new_files.each do |filename| 
+      next unless key == 'uswc_6km'
       name, date, key = match_filename(filename).to_a
       HttpDownloadWorker.perform_async(
         name, key, get_uri(filename), date_dir(key, date)
