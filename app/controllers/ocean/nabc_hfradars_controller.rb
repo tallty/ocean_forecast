@@ -11,7 +11,7 @@ class Ocean::NabcHfradarsController < ApplicationController
       data_type = (data_types & Array(params[:type])).first
       return({ code: '100002', msg: "invalid type : #{params[:type]}" }) unless data_type
       
-      files = Dir[ File.join(date_dir(data_type, date), "*#{file_type}") ].map do |path|
+      files = Dir[ File.join(date_dir(data_type, date), "*#{file_type}") ].sort.map do |path|
         {
           filename: File.basename(path),
           url: "#{url_base}#{path.split('/public/').last}"
@@ -20,7 +20,7 @@ class Ocean::NabcHfradarsController < ApplicationController
 
       {
         code: '0',
-        msg: '',
+        msg: msg_trans(data_type),
         data: {
           type: data_type,
           date: date.to_s,
@@ -56,5 +56,20 @@ class Ocean::NabcHfradarsController < ApplicationController
         ushi_1km  ushi_2km  ushi_6km  
         prvi_2km  prvi_6km 
       }
+    end
+
+    def msg_trans type
+      case type
+      when /usegc_.*/
+        'US East Coast and Gulf of Mexico HF Radar data '
+      when /uswc_.*/
+        'US West Coast HF Radar data'
+      when /ushi_.*/
+        'US Hawaii HF Radar data'
+      when /prvi_.*/
+        'Puerto Rico/Virgin Islands HF Radar data'
+      else
+        ''
+      end
     end
 end

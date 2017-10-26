@@ -17,6 +17,12 @@ class NABC::Hfradar
   # 
   # Init File List:
   #   http://sdf.ndbc.noaa.gov/thredds/catalog/hfradar/catalog.html
+  # 
+  # Types: 
+  #   usegc_1km, usegc_2km, usegc_6km             US East Coast and Gulf of Mexico HF Radar data 
+  #   uswc_500m, uswc_1km,  uswc_2km,  uswc_6km   US West Coast HF Radar data
+  #   ushi_1km,  ushi_2km,  ushi_6km              US Hawaii HF Radar data
+  #   prvi_2km,  prvi_6km                         Puerto Rico/Virgin Islands HF Radar data
 
   LOCAL_DIR = '/home/deploy/ocean_forecast/public/ocean/nabc_hfradar/'
 

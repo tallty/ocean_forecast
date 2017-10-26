@@ -4,7 +4,7 @@ class HttpDownloadWorker
   sidekiq_options retry: 5, queue: 'http_download'
   # before someone die ?
   sidekiq_retries_exhausted do |msg, e|
-    Sidekiq.logger.warn "Failed #{msg['class']} with #{msg['args']}: #{msg['error_message']}"
+    Sidekiq.logger.error "Failed #{msg['class']} with #{msg['args']}: #{msg['error_message']}"
     $redis.srem "#{key}_downloading", name
   end
 
