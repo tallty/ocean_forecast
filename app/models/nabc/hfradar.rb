@@ -19,7 +19,7 @@ class NABC::Hfradar
   #   http://sdf.ndbc.noaa.gov/thredds/catalog/hfradar/catalog.html
 
   def initialize
-    @local_dir = '/public/nabc_hfradar/'
+    @local_dir = '/home/deploy/ocean_forecast/public/nabc_hfradar/'
   end
 
   def scan
@@ -30,8 +30,9 @@ class NABC::Hfradar
     end
 
     new_files.each do |filename| 
-      next unless key == 'uswc_6km'
+      
       name, date, key = match_filename(filename).to_a
+      next unless key == 'uswc_6km'
       HttpDownloadWorker.perform_async(
         name, key, get_uri(filename), date_dir(key, date)
       ) 
@@ -40,7 +41,8 @@ class NABC::Hfradar
 
   def get_list
     require 'net/http'
-    uri = URI('http://sdf.ndbc.noaa.gov/thredds/catalog/hfradar/catalog.html')
+    # uri = URI('http://sdf.ndbc.noaa.gov/thredds/catalog/hfradar/catalog.html')
+    uri = URI('http://61.152.122.112:8080//thredds/catalog/hfradar/catalog.html')
     res = Net::HTTP.get(uri)
     data = Nokogiri::HTML(res)#.search('pre/span').map(&:content)
   end
@@ -70,34 +72,7 @@ class NABC::Hfradar
   end
 
   def get_uri filename
-    "http://sdf.ndbc.noaa.gov/thredds/ncss/grid/hfradar/#{filename}?var=DOPx&var=DOPy&var=u&var=v"
+    # "http://sdf.ndbc.noaa.gov/thredds/ncss/grid/hfradar/#{filename}?var=DOPx&var=DOPy&var=u&var=v"
+    "http://61.152.122.112:8080/thredds/ncss/grid/hfradar/#{filename}?var=DOPx&var=DOPy&var=u&var=v"
   end
 end
-
-
-  # /^(.*)_hfr_(.*)_rtv_uwls_NDBC.nc/.match("201710201700_hfr_usegc_1km_rtv_uwls_NDBC.nc")
-
-  # /^(.*)_hfr_usegc_1km_rtv_uwls_NDBC.nc/.match("201710201700_hfr_usegc_1km_rtv_uwls_NDBC.nc")
-  # split("\r\n").third
-
-  # group_by {|x| /^(.*)_hfr_(.*)_rtv_uwls_NDBC.nc/.match(x)[2] }
-
-  # '201710251100_hfr_uswc_6km_rtv_uwls_NDBC.nc'
-  # %q{
-  # hfradar_201710250300_hfr_uswc_1km_rtv_uwls_NDBC
-  # http://sdf.ndbc.noaa.gov/thredds/ncss/grid/hfradar/201710250300_hfr_uswc_1km_rtv_uwls_NDBC.nc?var=DOPx&var=DOPy&var=u&var=v&north=49.9920&west=-130.3600&east=-115.8055&south=30.2500&horizStride=1&time_start=2017-10-25T03%3A00%3A00Z&time_end=2017-10-25T03%3A00%3A00Z&timeStride=1
-
-
-  # 201710251100_hfr_uswc_6km_rtv_uwls_NDBC.nc
-  # http://sdf.ndbc.noaa.gov/thredds/ncss/grid/hfradar/201710251100_hfr_uswc_6km_rtv_uwls_NDBC.nc?var=DOPx&var=DOPy&var=u&var=v&horizStride=1&time_start=2017-10-25T11%3A00%3A00Z&time_end=2017-10-25T11%3A00%3A00Z&timeStride=1
-  # http://sdf.ndbc.noaa.gov/thredds/ncss/grid/hfradar/201710251100_hfr_uswc_6km_rtv_uwls_NDBC.nc?var=DOPx&var=DOPy&var=u&var=v&north=49.9920&west=-130.3600&east=-115.8055&south=30.2500&horizStride=1&time_start=2017-10-25T11%3A00%3A00Z&time_end=2017-10-25T11%3A00%3A00Z&timeStride=1
-  # }
-
-  # def default_lat_and_lot
-  #   {
-  #     'uswc_6km' => 'north=49.9920&west=-130.3600&east=-115.8055&south=30.2500'
-  #   }
-  # end
-  # http://sdf.ndbc.noaa.gov/thredds/ncss/grid/hfradar/201710251100_hfr_uswc_6km_rtv_uwls_NDBC.nc?var=DOPx&var=DOPy&var=u&var=v&time_start=2017-10-25T11%3A00%3A00Z&time_end=2017-10-25T11%3A00%3A00Z&timeStride=1
-  # http://sdf.ndbc.noaa.gov/thredds/ncss/grid/hfradar/201710251100_hfr_uswc_6km_rtv_uwls_NDBC.nc?var=DOPx&var=DOPy&var=u&var=v
-  # "http://sdf.ndbc.noaa.gov/thredds/ncss/grid/hfradar/#{filename}?var=DOPx&var=DOPy&var=u&var=v"

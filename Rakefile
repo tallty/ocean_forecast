@@ -4,6 +4,7 @@
 require_relative 'config/application'
 
 Rails.application.load_tasks
+env = ENV['RACK_ENV'] || 'development'
 
 namespace :sidekiq do
   task :start do

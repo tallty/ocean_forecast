@@ -6,7 +6,7 @@ threads 2, 128
 workers 4
 
 app_name = "ocean_forecast"
-application_path = "/root/www/#{app_name}"
+application_path = "/home/deploy/#{app_name}"
 directory application_path
 
 pidfile "#{application_path}/tmp/pids/puma.pid"
