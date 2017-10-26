@@ -19,7 +19,7 @@ class NABC::Hfradar
   #   http://sdf.ndbc.noaa.gov/thredds/catalog/hfradar/catalog.html
 
   def initialize
-    @local_dir = 'public/http'
+    @local_dir = '/root/www/sh_weather/public/nabc_hfradar/'
   end
 
   def scan
