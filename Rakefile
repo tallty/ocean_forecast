@@ -4,3 +4,13 @@
 require_relative 'config/application'
 
 Rails.application.load_tasks
+
+namespace :sidekiq do
+  task :start do
+    sh "bundle exec sidekiq  -e #{env} -C ./sidekiq/sidekiq.yml -r ./sidekiq/initialize.rb &"
+  end
+
+  task :stop do
+    sh 'bundle exec sidekiqctl stop tmp/pids/sidekiq.pid 0'
+  end
+end

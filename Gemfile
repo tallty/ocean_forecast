@@ -39,6 +39,9 @@ gem 'multi_json'
 gem 'whenever', :require => false
 # A set of Rails responders to dry up your application, Read more: https://github.com/plataformatec/responders
 gem "responders"
+# Simple, efficient background processing for Ruby http://sidekiq.org
+gem 'sidekiq'
+gem 'redis-namespace'
 ############################################################################################################
 
 group :development, :test do

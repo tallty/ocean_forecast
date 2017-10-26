@@ -32,6 +32,10 @@ end
 every 1.day, :at => '20:25' do
   runner "Shnwp::Cw.new.fetch_latest"
 end
+
+every 10.minutes do
+  runner "NABC::Hfradar.new.scanner"
+end
 #
 # every 4.days do
 #   runner "AnotherModel.prune_old_records"
