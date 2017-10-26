@@ -19,7 +19,7 @@ class Ocean::NabcHfradarsController < ApplicationController
       end
 
       {
-        code: '0',
+        code: '1',
         msg: msg_trans(data_type),
         data: {
           type: data_type,
