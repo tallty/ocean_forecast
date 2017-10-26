@@ -7,7 +7,7 @@ Rails.application.load_tasks
 
 namespace :sidekiq do
   task :start do
-    sh "bundle exec sidekiq  -e #{env} -C ./sidekiq/sidekiq.yml -r ./sidekiq/initialize.rb &"
+    sh "bundle exec sidekiq  -e #{env} -C ./config/sidekiq.yml &"
   end
 
   task :stop do
