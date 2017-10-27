@@ -7,7 +7,7 @@ class Ocean::NabcHfradarsController < ApplicationController
   private
 
     def get_data_json
-      date = Date.parse params[:date] rescue Time.zone.today
+      date = Date.parse params[:date] rescue Time.now.gmtime.today
       data_type = (data_types & Array(params[:type])).first
       return({ code: '100002', msg: "invalid type : #{params[:type]}" }) unless data_type
       

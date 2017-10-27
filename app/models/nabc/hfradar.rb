@@ -37,6 +37,7 @@ class NABC::Hfradar
       
       name, date, key = match_filename(filename).to_a
       next unless key.in?(['usegc_1km', 'uswc_1km', 'ushi_1km'])
+      next unless date.to_date >= Time.now.gmtime.to_date
       HttpDownloadWorker.perform_async(
         name, key, get_uri(filename), date_dir(key, date)
       ) 
