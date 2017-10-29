@@ -9,7 +9,7 @@ class HttpDownloadWorker
   end
 
   def perform name, key, uri, target_dir
-    p "Get #{[ name, key, uri, target_dir ]}"
+    # p "Get #{[ name, key, uri, target_dir ]}"
     FileUtils.mkdir_p target_dir unless File.exist?(target_dir)
     target_path = File.join(target_dir, "#{name}.downloading")
     target_completed_path = File.join(target_dir, "#{name}")
