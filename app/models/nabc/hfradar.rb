@@ -41,6 +41,7 @@ class NABC::Hfradar
       HttpDownloadWorker.perform_async(
         name, key, get_uri(filename), date_dir(key, date)
       ) 
+      $redis.sadd("#{key}_downloading", filename)
     end
   end
 
