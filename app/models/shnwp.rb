@@ -91,6 +91,7 @@ module Shnwp
         local_file = File.join local_dir, "#{file}"
         FileUtils.mkdir_p local_dir
 
+        too_large_error = false
         begin
           if self.closed?
             puts "#{Time.zone.now} reconnect ftp connection"
@@ -99,13 +100,19 @@ module Shnwp
           end
           puts "#{Time.zone.now} remote dir is: #{@connection.getdir}"
           puts "#{Time.zone.now} begin to download #{file}, save to #{local_file}"
+          if File.exists?(local_file) && too_large_error
+            FileUtils.rm local_file 
+            too_large_error = false
+          end
           @connection.getbinaryfile(file, local_file)
 
           file_path = local_file.sub("../sh_weather/public/", "")
           file_info_arr << { filename: file, url: "#{url}/#{file_path}" }
         rescue Exception => e
           self.close
+          p e
           puts e.backtrace
+          too_large_error = true if e.message.include?('too large')
           sleep 10
           retry
         end
