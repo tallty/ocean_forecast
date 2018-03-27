@@ -76,7 +76,7 @@ module Shnwp
 
   private
     def fetch_folder folder
-      url = "http://61.152.122.112:8080"
+      url = "http://61.152.122.112:8080/ocean"
 
       dir = File.join @remote_dir, folder
       @connection.chdir dir rescue return
@@ -106,7 +106,7 @@ module Shnwp
           end
           @connection.getbinaryfile(file, local_file)
 
-          file_path = local_file.sub("../sh_weather/public/", "")
+          file_path = local_file.sub("./public/", "")
           file_info_arr << { filename: file, url: "#{url}/#{file_path}" }
 
           # Save file informations to redis when processing data on time
