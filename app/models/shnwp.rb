@@ -108,6 +108,12 @@ module Shnwp
 
           file_path = local_file.sub("../sh_weather/public/", "")
           file_info_arr << { filename: file, url: "#{url}/#{file_path}" }
+
+          # Save file informations to redis when processing data on time
+          folder = folder.gsub "/", ""
+          redis_key = "#{self.class.to_s}#data##{folder[0..7]}"
+          $redis.hset(redis_key, folder, file_info_arr.to_json)
+          $redis.expire redis_key, 7*24*3600 # 7days expire
         rescue Exception => e
           self.close
           p e
