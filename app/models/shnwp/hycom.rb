@@ -7,7 +7,7 @@ class Shnwp::Hycom
     @passive = true
     @user = "unimet"
     @password = "KKcBh9VhivM"
-    @local_dir = "../sh_weather/public/hycom"
+    @local_dir = "./public/hycom"
     @remote_dir = "/HYCOM"
 
     @file_pattern = "hycom*"

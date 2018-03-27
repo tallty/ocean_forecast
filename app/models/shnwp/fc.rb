@@ -7,7 +7,7 @@ class Shnwp::Fc
     @passive = true
     @user = "unimet"
     @password = "123456"
-    @local_dir = "../sh_weather/public/fc"
+    @local_dir = "./public/fc"
     @remote_dir = "/FC"
 
     @file_pattern = "*json"

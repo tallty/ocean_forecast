@@ -7,7 +7,7 @@ class Shnwp::Nww3
     @passive = true
     @user = "unimet"
     @password = "KKcBh9VhivM"
-    @local_dir = "../sh_weather/public/nww3"
+    @local_dir = "./public/nww3"
     @remote_dir = "/NWW3"
 
     @file_pattern = "nww3*"

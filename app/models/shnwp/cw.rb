@@ -7,7 +7,7 @@ class Shnwp::Cw
     @passive = true
     @user = "unimet"
     @password = "123456"
-    @local_dir = "../sh_weather/public/cw"
+    @local_dir = "./public/cw"
     @remote_dir = "/CW"
 
     @file_pattern = "*json"

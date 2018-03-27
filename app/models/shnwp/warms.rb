@@ -7,7 +7,7 @@ class Shnwp::Warms
     @passive = true
     @user = "kefuuser"
     @password = "TpTCEWRz"
-    @local_dir = "../sh_weather/public/warms"
+    @local_dir = "./public/warms"
     @remote_dir = "/"
 
     @file_pattern = "*.BIN"
