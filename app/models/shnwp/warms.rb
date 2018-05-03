@@ -19,7 +19,7 @@ class Shnwp::Warms
 
     date_string = date.strftime('%Y/%m/%d')
     puts "date_string is:#{date_string}"
-    @connection.chdir File.join(@lremote_dir, date_string)
+    @connection.chdir File.join(@remote_dir, date_string)
     dirs = self.ls rescue [00, 12]
     dirs.select! { |dir| ['00', '12'].include? dir }
     
