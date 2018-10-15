@@ -52,23 +52,12 @@ module Shnwp
 
   def fetch_by_date date
     $redis.set "#{self.class.to_s}#processing", true
-    connection = self.connect
+    self.connect
 
-    date_string = date.strftime('%Y%m%d')
+    date_string = date.strftime('%Y/%m/%d')
     puts "date_string is:#{date_string}"
-    @connection.chdir @remote_dir
-    dirs = self.ls rescue [date_string]
-    dirs.select! { |dir| dir.start_with? date_string }
-    
-    dirs.each do |folder|
-      last_proc_time = ( Time.zone.parse $redis.hget("last_proc_time", self.class.to_s) rescue Time.zone.now-10.day )
-      file_created_at = Time.zone.parse(folder)
-      next unless file_created_at > last_proc_time
 
-      files = fetch_folder folder
-
-      $redis.hset("last_proc_time", self.class.to_s, folder ) if files.present?
-    end
+    fetch_folder date_string
   ensure
     $redis.del "#{self.class.to_s}#processing"
     self.close
