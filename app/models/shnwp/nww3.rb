@@ -8,7 +8,7 @@ class Shnwp::Nww3
     @user = "unimet"
     @password = "KKcBh9VhivM"
     @local_dir = "./public/nww3"
-    @remote_dir = "/NWW3"
+    @remote_dir = "/WW3"
 
     @file_pattern = "nww3*"
   end
