@@ -17,6 +17,8 @@ module Shnwp
       "Shnwp::Hycom"
     when "nww3"
       "Shnwp::Nww3"
+    when "nww3sh"
+      "Shnwp::Nww3Sh"
     when "cw"
       "Shnwp::Cw"
     when "fc"
@@ -61,10 +63,6 @@ module Shnwp
   ensure
     $redis.del "#{self.class.to_s}#processing"
     self.close
-  end
-
-  def self.redis_class
-    self.class.to_s
   end
 
   private
@@ -119,7 +117,7 @@ module Shnwp
 
       # Save file informations to redis
       folder = folder.gsub "/", ""
-      redis_key = "#{self.redis_class}#data##{folder[0..7]}"
+      redis_key = "#{self.class.to_s}#data##{folder[0..7]}"
       $redis.hset(redis_key, folder, file_info_arr.to_json)
       $redis.expire redis_key, 7*24*3600 # 7days expire
 
