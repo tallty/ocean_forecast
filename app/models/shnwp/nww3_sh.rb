@@ -12,4 +12,8 @@ class Shnwp::Nww3Sh
 
     @file_pattern = "sims_nww3*"
   end
+
+  def self.redis_class
+    'Shnwwp::Nww3'
+  end
 end
