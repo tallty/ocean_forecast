@@ -21,6 +21,10 @@ every 10.minutes do
 end
 
 every 10.minutes do
+  runner "Shnwp::Nww3Sh.new.fetch_latest"
+end
+
+every 10.minutes do
   runner "Shnwp::Warms.new.fetch_latest"
 end
 
