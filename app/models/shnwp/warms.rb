@@ -28,7 +28,7 @@ class Shnwp::Warms
 
       time_string = "#{date_string} #{folder}"
       file_created_at = Time.zone.parse(time_string)
-      next unless file_created_at > last_proc_time
+      # next unless file_created_at > last_proc_time
 
       folder = "#{date_string}/#{folder}"
       files = fetch_folder folder
